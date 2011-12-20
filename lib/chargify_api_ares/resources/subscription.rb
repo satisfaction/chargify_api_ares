@@ -57,6 +57,10 @@ module Chargify
       post :migrations, :migration => attrs
     end
 
+    def preview_migrate(attrs = {})
+      post 'migrations/preview'.to_sym, {}, attrs.to_xml(:root => :migration)
+    end
+
     def statement(id)
       statement = Chargify::Statement.find(id)
       raise ActiveResource::ResourceNotFound.new(nil) if (statement.subscription_id != self.id)
